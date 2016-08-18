@@ -2,9 +2,6 @@
 <configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
-      <df name="BRIO">
-        <in>Brio.cpp</in>
-      </df>
       <df name="instances">
         <df name="cpp">
           <df name="Gabriel">
@@ -41,23 +38,6 @@
           <in>OBJConverter.cpp</in>
         </df>
       </df>
-      <df name="KDtree">
-        <df name="sort">
-          <in>BucketSort.cpp</in>
-          <in>MergeSort.cpp</in>
-          <in>RadixSort.cpp</in>
-        </df>
-        <in>KDTree.cpp</in>
-      </df>
-      <df name="Parallel">
-        <in>CgalParallel.cpp</in>
-      </df>
-      <df name="Sequential">
-        <in>main.cpp</in>
-      </df>
-      <df name="Utils">
-        <in>utils.cpp</in>
-      </df>
     </df>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -92,22 +72,6 @@
           <preBuildCommand></preBuildCommand>
         </preBuild>
       </makefileType>
-      <item path="BRIO/Brio.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="KDtree/KDTree.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="KDtree/sort/BucketSort.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="KDtree/sort/MergeSort.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="KDtree/sort/RadixSort.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Parallel/CgalParallel.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sequential/main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Utils/utils.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="instances/MeshView/MeshView.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="instances/OBJConverter/OBJConverter.cpp"
