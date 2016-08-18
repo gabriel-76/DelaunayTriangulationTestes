@@ -62,7 +62,9 @@ int main(int argc, char** argv) {
 		if(vetCoordenadas[(y*mesh_len+x)] == 1){
 			tempCoord[cont].xC = (double)x/(double)mesh_len;
 			tempCoord[cont].yC = (double)y/(double)mesh_len;
+			
 			z = 1-(2*((sqrt(((tempCoord[cont].xC-0.5)*(tempCoord[cont].xC-0.5))+((tempCoord[cont].yC-0.5)*(tempCoord[cont].yC-0.5))))));
+			
 			tempCoord[cont].xC += (rand()%10000/(10000*1.0))*0.02;
 			tempCoord[cont].yC += (rand()%10000/(10000*1.0))*0.02;
 			tempCoord[cont].zC = z+(rand()%10000/(10000*1.0))*0.02;
@@ -78,12 +80,15 @@ int main(int argc, char** argv) {
 		tempI = tempCoord[i].xC*100000;
 		tempF = (double)tempI/(double)100000;
 		tempCoord[i].xC = tempF;
+		
 		tempI = tempCoord[i].yC*100000;
 		tempF = (double)tempI/(double)100000;
 		tempCoord[i].yC = tempF;
+		
 		tempI = tempCoord[i].zC*100000;
 		tempF = (double)tempI/(double)100000;
 		tempCoord[i].zC = tempF;
+		
 		if(tempCoord[i].xC>=1)
 			tempCoord[i].xC = 0.99;
 		if(tempCoord[i].yC>=1)

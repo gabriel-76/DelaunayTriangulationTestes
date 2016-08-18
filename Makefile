@@ -1,4 +1,4 @@
-main : clean
+main : compile
 
 compile :	install-pre-requisites
 	./compile.sh
