@@ -1,11 +1,32 @@
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
+#include <cstring>
 
 using namespace std;
 char op = '0';
 
 void exit(){
 	exit(0);
+}
+
+void static_test(){
+	
+	char caminho[60];
+	char caminho2[60];
+	strcpy(caminho,"./../Sequential/InexactPredicates/inexact ");
+	strcpy(caminho2,"./../KDtreeLiu/InexactPredicates/inexact ");
+	
+    char file_name[20];
+    cout << "Digite o caminho do arquivo" << endl;
+    cin >> file_name;
+    strcat(caminho,file_name);
+    strcat(caminho2,file_name);
+    
+    
+    //cout << caminho << endl;    
+    system(caminho);
+    system(caminho2);
 }
 
 void menu_select_instance(){
@@ -31,16 +52,16 @@ void menu_type_tests() {
             
     cin >> op;
     switch (op) {
-        case '1':
+        case '1': static_test();
             break;
-        case'2':
+        case '2':
             break;
         case's': exit();
             break;
     }
     op = '0';
-    system("clear");
-    menu_select_instance();
+    //system("clear");
+    //menu_select_instance();
 
 }
 
@@ -53,7 +74,7 @@ void menu() {
     cin >> op;
 
     switch (op) {
-        case '1':
+        case '1': 
             break;
         case'2':
             break;

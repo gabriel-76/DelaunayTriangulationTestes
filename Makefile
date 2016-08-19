@@ -1,6 +1,6 @@
 main : compile
 
-compile :	install-pre-requisites
+compile :	
 	./compile.sh
 
 install-pre-requisites :
