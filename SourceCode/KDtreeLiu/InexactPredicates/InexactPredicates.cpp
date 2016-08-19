@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include "./../../Utils/utils.cpp"
+#include "../../../instances/Generation/dinamicInstances.cpp"
 
 template < class GT, class Vb = CGAL::Triangulation_vertex_base_3<GT> >
 class My_vertex_base
@@ -66,7 +67,7 @@ void Print_Memory() {
     std::cout << memory_after - memory_before << ",";
 }
 
-void Check_Nunber_Of_Points_In_Triangulation(Delaunay &delaunay_triangulation,int number_of_points) {
+void Check_Nunber_Of_Points_In_Triangulation(Delaunay delaunay_triangulation, int number_of_points) {
 
     assert(delaunay_triangulation.is_valid());
     unsigned int full = delaunay_triangulation.number_of_vertices();
@@ -75,7 +76,79 @@ void Check_Nunber_Of_Points_In_Triangulation(Delaunay &delaunay_triangulation,in
         std::cout << "success" << std::endl;
     } else {
         std::cout << "warning contais " << full
-                << "expected" << number_of_points << std::endl;
+                << " expected " << number_of_points << std::endl;
+    }
+
+}
+
+void Read_Dinamic_Instance(int id, int num_vertices) {
+    Generator g;
+    numnodes3 = num_vertices;
+    coord_nodes3 = (double (*)[3])new double[numnodes3 * 3];
+    switch (id) {
+        case 1:
+            for (int i = 0; i < numnodes3; i++) {
+                g = Create_Aleatorio();
+                coord_nodes3[i][0] = g.x;
+                coord_nodes3[i][1] = g.y;
+                coord_nodes3[i][2] = g.z;
+            };
+            break;
+        case 2:
+            for (int i = 0; i < numnodes3; i++) {
+                g = Create_Planos();
+                coord_nodes3[i][0] = g.x;
+                coord_nodes3[i][1] = g.y;
+                coord_nodes3[i][2] = g.z;
+            };
+            break;
+        case 3:
+            for (int i = 0; i < numnodes3; i++) {
+                g = Create_Paraboloide();
+                coord_nodes3[i][0] = g.x;
+                coord_nodes3[i][1] = g.y;
+                coord_nodes3[i][2] = g.z;
+            };
+            break;
+        case 4:
+            for (int i = 0; i < numnodes3; i++) {
+                g = Create_Espiral();
+                coord_nodes3[i][0] = g.x;
+                coord_nodes3[i][1] = g.y;
+                coord_nodes3[i][2] = g.z;
+            };
+            break;
+        case 5:
+            for (int i = 0; i < numnodes3; i++) {
+                g = Create_Disco();
+                coord_nodes3[i][0] = g.x;
+                coord_nodes3[i][1] = g.y;
+                coord_nodes3[i][2] = g.z;
+            };
+            break;
+        case 6:
+            for (int i = 0; i < numnodes3; i++) {
+                g = Create_Cilindro();
+                coord_nodes3[i][0] = g.x;
+                coord_nodes3[i][1] = g.y;
+                coord_nodes3[i][2] = g.z;
+            };
+            break;
+        case 7:
+            for (int i = 0; i < numnodes3; i++) {
+                g = Create_Eixos();
+                coord_nodes3[i][0] = g.x;
+                coord_nodes3[i][1] = g.y;
+                coord_nodes3[i][2] = g.z;
+            };
+            break;
+        case 8:for (int i = 0; i < numnodes3; i++) {
+                g = Create_Sela();
+                coord_nodes3[i][0] = g.x;
+                coord_nodes3[i][1] = g.y;
+                coord_nodes3[i][2] = g.z;
+            };
+            break;
     }
 }
 
@@ -107,9 +180,18 @@ const int randomtest = 0;
 int main(int argc, char **argv) {
     Delaunay T;
     std::vector<Point> P;
+    
+    if(argc < 3){
+        cout << "Read the manual" <<endl;
+        exit(0);
+    }
 
-    node_in(argv[1]);
-
+    int op = atoi(argv[1]);
+    if (op == 1) {
+        node_in(argv[2]);
+    } else if (op == 2) {
+        Read_Dinamic_Instance(atoi(argv[2]),atoi(argv[3]));
+    }
     arrayofnodetet.resize(numnodes3);
 
 
@@ -130,7 +212,7 @@ int main(int argc, char **argv) {
     memory_after = Utils::current_mem_usage();
     Print_Time();
     Print_Memory();
-    Check_Nunber_Of_Points_In_Triangulation(T,numnodes3);
+    Check_Nunber_Of_Points_In_Triangulation(T, numnodes3);
     cout << "\n\n";
     T.clear();
 

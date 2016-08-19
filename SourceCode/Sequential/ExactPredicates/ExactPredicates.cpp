@@ -17,6 +17,7 @@
 // Build includes
 #include <vector>
 #include "./../../Utils/utils.cpp"
+#include "../../../instances/Generation/dinamicInstances.cpp"
 
 typedef CGAL::Exact_predicates_exact_constructions_kernel EK;
 typedef CGAL::Triangulation_vertex_base_3 <EK> Vb;
@@ -34,7 +35,6 @@ std::vector<Vertex_handle> pointsReference;
 Delaunay delaunay_triangulation;
 
 unsigned int number_of_points;
-bool interval_instance = false;
 
 Memory memory_before, memory_after;
 clock_t clock_first, clock_second;
@@ -42,7 +42,7 @@ time_t time_first, time_second;
 
 void Print_Time() {
     std::cout << (double) (clock_second - clock_first) / ((double) CLOCKS_PER_SEC) << ","
-              << difftime(time_second, time_first) << ",";
+            << difftime(time_second, time_first) << ",";
 }
 
 void Print_Memory() {
@@ -61,20 +61,6 @@ bool is_numeric(const char *str) {
     return res;
 }
 
-void Check_Entries(int num_args, char **args) {
-    if (num_args < 2) {
-        std::cout << "PASS THE INSTANCE BY PARAMETER" << std::endl
-                << "EXIT_FAILURE" << std::endl;
-        exit(1);
-    } else if (num_args == 3) {
-        if (is_numeric(args[2])) {
-            std::cout << "IDENTIFIED INSTANCE LIMIT" << std::endl;
-            number_of_points = atoi(args[2]);
-            interval_instance = true;
-        }
-    }
-}
-
 void Check_Nunber_Of_Points_In_Triangulation() {
 
     assert(delaunay_triangulation.is_valid());
@@ -84,8 +70,7 @@ void Check_Nunber_Of_Points_In_Triangulation() {
         std::cout << "success" << std::endl;
     } else {
         std::cout << "warning contais " << full
-                  << "expected" << number_of_points << std::endl;
-        
+                << " expected " << number_of_points << std::endl;
     }
 
 }
@@ -101,8 +86,8 @@ void Read_Instance(char *name) {
     }
     double coords[3];
 
-    if (!interval_instance)
-        file_points >> number_of_points;
+
+    file_points >> number_of_points;
 
     points.reserve(number_of_points);
     pointsReference.reserve(number_of_points);
@@ -120,6 +105,79 @@ void Read_Instance(char *name) {
     file_points.close();
 }
 
+void Read_Dinamic_Instance(int id, int num_vertices) {
+    Generator g;
+    number_of_points = num_vertices;
+    points.reserve(number_of_points);
+    switch (id) {
+        case 1:
+            for (int i = 0; i < number_of_points; i++) {
+                g = Create_Aleatorio();
+                points.push_back(Point(g.x, g.y, g.z));
+            };
+            break;
+        case 2:
+            for (int i = 0; i < number_of_points; i++) {
+                g = Create_Planos();
+                points.push_back(Point(g.x, g.y, g.z));
+            };
+            break;
+        case 3:
+            for (int i = 0; i < number_of_points; i++) {
+                g = Create_Paraboloide();
+                points.push_back(Point(g.x, g.y, g.z));
+            };
+            break;
+        case 4:
+            for (int i = 0; i < number_of_points; i++) {
+                g = Create_Espiral();
+                points.push_back(Point(g.x, g.y, g.z));
+            };
+            break;
+        case 5:
+            for (int i = 0; i < number_of_points; i++) {
+                g = Create_Disco();
+                points.push_back(Point(g.x, g.y, g.z));
+            };
+            break;
+        case 6:
+            for (int i = 0; i < number_of_points; i++) {
+                g = Create_Cilindro();
+                points.push_back(Point(g.x, g.y, g.z));
+            };
+            break;
+        case 7:
+            for (int i = 0; i < number_of_points; i++) {
+                g = Create_Eixos();
+                points.push_back(Point(g.x, g.y, g.z));
+            };
+            break;
+        case 8:for (int i = 0; i < number_of_points; i++) {
+                g = Create_Sela();
+                points.push_back(Point(g.x, g.y, g.z));
+            };
+            break;
+    }
+    //    for (int i = 0; i < 10; i++){
+    //        g = Create_Aleatorio();
+    //        std :: cout << g.x << " " << g.y << " " << g.z << " " << std::endl;
+    //    }
+}
+
+void Check_Entries(int num_args, char **args) {
+    if (num_args < 3) {
+        std::cout << "Read the manual" << std::endl;
+        exit(1);
+    } else {
+        switch (atoi(args[1])) {
+            case 1: Read_Instance(args[2]);
+                break;
+            case 2: Read_Dinamic_Instance(atoi(args[2]), atoi(args[3]));
+                break;
+        }
+    }
+}
+
 /*
  * void Read_Pontos(char *name) {
 
@@ -132,8 +190,8 @@ void Read_Instance(char *name) {
     }
     double coords[3];
 
-    if (!interval_instance)
-        file_points >> number_of_points;
+
+    file_points >> number_of_points;
     pontos.reserve(number_of_points);
 
     int i = 0;
@@ -148,12 +206,12 @@ void Read_Instance(char *name) {
     }
     file_points.close();
 }
-*/
+ */
 
 void Compute_Delaunay() {
     pointsReference[0] = delaunay_triangulation.insert(points[0]);
     for (int i = 1; i != number_of_points; ++i)
-        pointsReference[i] = delaunay_triangulation.insert(points[i],pointsReference[i-1]->cell());
+        pointsReference[i] = delaunay_triangulation.insert(points[i], pointsReference[i - 1]->cell());
 }
 
 void Compute_Delaunay_Reverse() {
@@ -345,7 +403,7 @@ void Compute_Reverse_Cut_Longest_Edge_KDtree(char *filename) {
     Check_Nunber_Of_Points_In_Triangulation();
     delaunay_triangulation.clear();
 }
-*/
+ */
 void Compute_Default_Constructor() {
     std::cout << "Default Constructor,";
     clock_first = clock();
@@ -360,39 +418,37 @@ void Compute_Default_Constructor() {
     delaunay_triangulation.clear();
 }
 
-void head_csv(char *name_instance){
-    
+void head_csv(char *name_instance) {
+
     char str[60];
     int posi = -1;
     int n = strlen(name_instance);
-    
-    for(int i = 0; i < n; i++){       
-        if(isalpha(name_instance[i])){
+
+    for (int i = 0; i < n; i++) {
+        if (isalpha(name_instance[i])) {
             posi = i;
-            break;            
+            break;
         }
-    }
-    
-    if(posi != -1){
-        for(int i = posi; i < n; i++){
-            str[i-posi] = name_instance[i];
-        }
-        str[n] = '\0';
-    }
-    else{
-        strcpy(str,name_instance);
     }
 
-    
-    std::cout << "exact " << number_of_points << "," << str << ",,,status\n";
-    std::cout << ",Time Clock,Time Liu,Memory\n";    
+    if (posi != -1) {
+        for (int i = posi; i < n; i++) {
+            str[i - posi] = name_instance[i];
+        }
+        str[n] = '\0';
+    } else {
+        strcpy(str, name_instance);
+    }
+
+
+    std::cout << "inexact " << number_of_points << "," << str << ",,,status\n";
+    std::cout << ",Time Clock,Time Liu,Memory\n";
 }
 
 int main(int argc, char **argv) {
-
-    Check_Entries(argc, argv);
+    srand48(time(NULL));
     memory_before = Utils::current_mem_usage();
-    Read_Instance(argv[1]);
+    Check_Entries(argc, argv);
     head_csv(argv[1]);
 
     //~ Compute_Aleatory();
@@ -408,6 +464,5 @@ int main(int argc, char **argv) {
     //~ Compute_Reverse_Brio();
     Compute_Default_Constructor();
     //Compute_Reverse_Cut_Longest_Edge_KDtree(argv[1]);
-
     return EXIT_SUCCESS;
 }
