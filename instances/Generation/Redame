@@ -1,0 +1,15 @@
+Passe a quantidade de vertices e o nome do arquivo exemplo
+
+./intancesGeneretion 1 10000 >aleatorio.txt 
+
+"============== Select instance ================="
+"1- Random instance"
+"2- Planes instance"
+"3- Paraboloid instance"
+"4- Spiral instance"
+"5- Disk instance"
+"6- Cylinder instance"
+"7- Axes instance"
+"8- Saddle instance"
+
+

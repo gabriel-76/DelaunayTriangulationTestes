@@ -47,3 +47,7 @@ dist/
 nbdist/
 nbactions.xml
 .nb-gradle/
+
+*.txt
+
+intancesGenerate

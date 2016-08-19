@@ -77,6 +77,30 @@ void Create_Eixos(int NUM_VERTICES){
 	}
 }
 
+void Create_Espiral(int NUM_VERTICES){
+	double t, f, r;
+	int i = 0;
+	
+	f = 100.0;
+	
+	cout << NUM_VERTICES << endl;
+	while(i < NUM_VERTICES){
+		
+		t = drand48();
+		r = drand48()/2;
+		
+		// //~ f = 100 + (rand() % 10);
+		
+		r = 0.45 + drand48()/15;
+		
+		cout << ((1-t)*r)*cos(t*f) + 0.5 << " " 
+			 << ((1-t)*r)*sin(t*f) + 0.5 << " "
+			 <<  t << endl;
+			
+		i++;
+	}
+}
+
 void Create_Paraboloide(int NUM_VERTICES){	
 	double x, y, z, a, b;
 	int i = 0, cont = 0;	
@@ -195,12 +219,42 @@ srand48(time(NULL));
 	}
 }
 
-void menu(){
-	cout << "Select "
+void Create_All(int num){
+	Create_Aleatorio(num);
+	Create_Planos(num);
+	Create_Paraboloide(num);
+	Create_Espiral(num);
+	Create_Disco(num);
+    Create_Cilindro(num);
+    Create_Eixos(num);
+    Create_Sela(num);
+}
+
+void menu(int op,int num){	
+	switch(op){
+		case 1: Create_Aleatorio(num);
+		break;
+		case 2: Create_Planos(num);
+		break;
+		case 3: Create_Paraboloide(num);
+		break;
+		case 4: Create_Espiral(num);
+		break;
+		case 5: Create_Disco(num);
+		break;
+		case 6: Create_Cilindro(num);
+		break;
+		case 7: Create_Eixos(num);
+		break;
+		case 8: Create_Sela(num);
+		break;
+	}	
 }
 
 
 int main(int argc, char** argv) {
 	srand48(time(NULL));
+	if(argc < 3) exit(0);	
+	menu(atoi(argv[1]),atoi(argv[2]));
 	return 0;
 }
