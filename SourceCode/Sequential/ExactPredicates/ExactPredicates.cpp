@@ -41,12 +41,12 @@ clock_t clock_first, clock_second;
 time_t time_first, time_second;
 
 void Print_Time() {
-    std::cout << "Time Clock: " << (double) (clock_second - clock_first) / ((double) CLOCKS_PER_SEC) << std::endl;
-    std::cout << "Time Liu: " << difftime(time_second, time_first) << std::endl;
+    std::cout << (double) (clock_second - clock_first) / ((double) CLOCKS_PER_SEC) << ","
+              << difftime(time_second, time_first) << ",";
 }
 
 void Print_Memory() {
-    std::cout << "Memory: " << memory_after - memory_before << std::endl;
+    std::cout << memory_after - memory_before << ",";
 }
 
 bool is_numeric(const char *str) {
@@ -78,14 +78,14 @@ void Check_Entries(int num_args, char **args) {
 void Check_Nunber_Of_Points_In_Triangulation() {
 
     assert(delaunay_triangulation.is_valid());
-    signed int full = delaunay_triangulation.number_of_vertices();
+    unsigned int full = delaunay_triangulation.number_of_vertices();
 
     if (full == number_of_points) {
-        std::cout << "EXIT_SUCCESS" << std::endl;
+        std::cout << "success" << std::endl;
     } else {
-        std::cout << "WARNING : NUMBER OF VERTICES IS LOWER THAN EXPECTED" << std::endl
-                << "CONTAIS : " << full << std::endl
-                << "EXPECTED " << number_of_points << std::endl;
+        std::cout << "warning contais " << full
+                  << "expected" << number_of_points << std::endl;
+        
     }
 
 }
@@ -96,7 +96,7 @@ void Read_Instance(char *name) {
     file_points.open(name);
 
     if (!file_points) {
-        std::cout << "FILE_NOT_EXIST" << std::endl;
+        std::cout << "file not exist" << std::endl;
         exit(1);
     }
     double coords[3];
@@ -162,7 +162,7 @@ void Compute_Delaunay_Reverse() {
 }
 
 void Compute_Aleatory() {
-    std::cout << "\nAleatory : " << number_of_points << std::endl;
+    std::cout << "Aleatory,";
     clock_first = clock();
     time_first = time(0);
     BRIO(0, number_of_points - 1, points);
@@ -177,7 +177,7 @@ void Compute_Aleatory() {
 }
 
 void Compute_Brio() {
-    std::cout << "\nBRIO Puro : " << number_of_points << std::endl;
+    std::cout << "BRIO Puro,";
     clock_first = clock();
     time_first = time(0);
     BRIO(0, number_of_points - 1, points);
@@ -192,7 +192,7 @@ void Compute_Brio() {
 }
 
 void Compute_Reverse_Brio() {
-    std::cout << "\nReverse BRIO : " << number_of_points << std::endl;
+    std::cout << "Reverse BRIO,";
     clock_first = clock();
     time_first = time(0);
     //BRIO(0, number_of_points-1, points);
@@ -207,7 +207,7 @@ void Compute_Reverse_Brio() {
 }
 
 void Compute_Hilbert_Median() {
-    std::cout << "\nHilbert Median : " << number_of_points << std::endl;
+    std::cout << "Hilbert Median,";
     clock_first = clock();
     time_first = time(0);
     CGAL::hilbert_sort(points.begin(), points.end(), CGAL::Hilbert_sort_median_policy());
@@ -222,7 +222,7 @@ void Compute_Hilbert_Median() {
 }
 
 void Compute_Reverse_Hilbert_Median() {
-    std::cout << "\nReverse Hilbert Median : " << number_of_points << std::endl;
+    std::cout << "Reverse Hilbert Median,";
     clock_first = clock();
     time_first = time(0);
     CGAL::hilbert_sort(points.begin(), points.end(), CGAL::Hilbert_sort_median_policy());
@@ -237,7 +237,7 @@ void Compute_Reverse_Hilbert_Median() {
 }
 
 void Compute_Hilbert_Middle() {
-    std::cout << "\nHilbert Middle : " << number_of_points << std::endl;
+    std::cout << "Hilbert Middle,";
     clock_first = clock();
     time_first = time(0);
     CGAL::hilbert_sort(points.begin(), points.end(), CGAL::Hilbert_sort_middle_policy());
@@ -252,7 +252,7 @@ void Compute_Hilbert_Middle() {
 }
 
 void Compute_Reverse_Hilbert_Middle() {
-    std::cout << "\nReverse Hilbert Middle : " << number_of_points << std::endl;
+    std::cout << "Reverse Hilbert Middle,";
     clock_first = clock();
     time_first = time(0);
     CGAL::hilbert_sort(points.begin(), points.end(), CGAL::Hilbert_sort_middle_policy());
@@ -267,7 +267,7 @@ void Compute_Reverse_Hilbert_Middle() {
 }
 
 void Compute_Spatial_Median() {
-    std::cout << "\nSpatial Median : " << number_of_points << std::endl;
+    std::cout << "Spatial Median,";
     clock_first = clock();
     time_first = time(0);
     CGAL::spatial_sort(points.begin(), points.end(), CGAL::Hilbert_sort_median_policy());
@@ -282,7 +282,7 @@ void Compute_Spatial_Median() {
 }
 
 void Compute_Reverse_Spatial_Median() {
-    std::cout << "\nReverse Spatial Median : " << number_of_points << std::endl;
+    std::cout << "Reverse Spatial Median,";
     clock_first = clock();
     time_first = time(0);
     CGAL::spatial_sort(points.begin(), points.end(), CGAL::Hilbert_sort_median_policy());
@@ -297,7 +297,7 @@ void Compute_Reverse_Spatial_Median() {
 }
 
 void Compute_Spatial_Middle() {
-    std::cout << "\nSpatial Middle : " << number_of_points << std::endl;
+    std::cout << "Spatial Middle,";
     clock_first = clock();
     time_first = time(0);
     CGAL::spatial_sort(points.begin(), points.end(), CGAL::Hilbert_sort_middle_policy());
@@ -312,7 +312,7 @@ void Compute_Spatial_Middle() {
 }
 
 void Compute_Reverse_Spatial_Middle() {
-    std::cout << "\nReverse Spatial Middle : " << number_of_points << std::endl;
+    std::cout << "Reverse Spatial Middle,";
     clock_first = clock();
     time_first = time(0);
     CGAL::spatial_sort(points.begin(), points.end(), CGAL::Hilbert_sort_middle_policy());
@@ -329,7 +329,7 @@ void Compute_Reverse_Spatial_Middle() {
 /*
 void Compute_Reverse_Cut_Longest_Edge_KDtree(char *filename) {
     //points.clear();
-    std::cout << "\nReverse Cut Longest Edge KD-tree : " << number_of_points << std::endl;
+    std::cout << "\nReverse Cut Longest Edge KD-tree : ,";
     Read_Pontos(filename);
     clock_first = clock();
     time_first = time(0);
@@ -347,7 +347,7 @@ void Compute_Reverse_Cut_Longest_Edge_KDtree(char *filename) {
 }
 */
 void Compute_Default_Constructor() {
-    std::cout << "\nDefault Constructor : " << number_of_points << std::endl;
+    std::cout << "Default Constructor,";
     clock_first = clock();
     time_first = time(0);
     delaunay_triangulation.insert(points.begin(), points.end());
@@ -360,11 +360,40 @@ void Compute_Default_Constructor() {
     delaunay_triangulation.clear();
 }
 
+void head_csv(char *name_instance){
+    
+    char str[60];
+    int posi = -1;
+    int n = strlen(name_instance);
+    
+    for(int i = 0; i < n; i++){       
+        if(isalpha(name_instance[i])){
+            posi = i;
+            break;            
+        }
+    }
+    
+    if(posi != -1){
+        for(int i = posi; i < n; i++){
+            str[i-posi] = name_instance[i];
+        }
+        str[n] = '\0';
+    }
+    else{
+        strcpy(str,name_instance);
+    }
+
+    
+    std::cout << "exact " << number_of_points << "," << str << ",,,status\n";
+    std::cout << ",Time Clock,Time Liu,Memory\n";    
+}
+
 int main(int argc, char **argv) {
 
     Check_Entries(argc, argv);
     memory_before = Utils::current_mem_usage();
     Read_Instance(argv[1]);
+    head_csv(argv[1]);
 
     //~ Compute_Aleatory();
     //Compute_Hilbert_Median();

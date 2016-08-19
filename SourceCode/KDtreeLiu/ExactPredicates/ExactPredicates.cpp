@@ -58,27 +58,25 @@ int *vp, vpre[8];
 extern bool qsortNodeInDirect12(const int &a, const int &b);
 
 void Print_Time() {
-    std::cout << "Time Clock: " << (double) (clock_second - clock_first) / ((double) CLOCKS_PER_SEC) << std::endl;
-    std::cout << "Time Liu: " << difftime(time_second, time_first) << std::endl;
+    std::cout << (double) (clock_second - clock_first) / ((double) CLOCKS_PER_SEC) << ","
+            << difftime(time_second, time_first) << ",";
 }
 
 void Print_Memory() {
-    std::cout << "Memory: " << memory_after - memory_before << std::endl;
+    std::cout << memory_after - memory_before << ",";
 }
 
-void Check_Nunber_Of_Points_In_Triangulation(Delaunay &delaunay_triangulation) {
+void Check_Nunber_Of_Points_In_Triangulation(Delaunay &delaunay_triangulation,int number_of_points) {
 
     assert(delaunay_triangulation.is_valid());
-    signed int full = delaunay_triangulation.number_of_vertices();
+    unsigned int full = delaunay_triangulation.number_of_vertices();
 
-    if (full == numnodes3) {
-        std::cout << "EXIT_SUCCESS" << std::endl;
+    if (full == number_of_points) {
+        std::cout << "success" << std::endl;
     } else {
-        std::cout << "WARNING : NUMBER OF VERTICES IS LOWER THAN EXPECTED" << std::endl
-                << "CONTAIS : " << full << std::endl
-                << "EXPECTED " << numnodes3 << std::endl;
+        std::cout << "warning contais " << full
+                << "expected" << number_of_points << std::endl;
     }
-
 }
 
 void node_in(const char *filename) { //for wang min zhong
@@ -109,15 +107,15 @@ const int randomtest = 0;
 int main(int argc, char **argv) {
     Delaunay T;
     std::vector<Point> P;
-    
+
     node_in(argv[1]);
 
     arrayofnodetet.resize(numnodes3);
-    
-        
+
+
     makeInsOrder();
-    
-    std::cout << "\nKDtree-Liu : " << numnodes3 << std::endl;
+
+    std::cout << "KDtree-Liu,";
     clock_first = clock();
     time_first = time(0);
 
@@ -126,13 +124,13 @@ int main(int argc, char **argv) {
         insertnode = vp[i];
         arrayofnodetet[insertnode] = T.insert(Point(coord_nodes3[insertnode][0], coord_nodes3[insertnode][1], coord_nodes3[insertnode][2]), getStartTet(i));
     }
-    
+
     clock_second = clock();
     time_second = time(0);
     memory_after = Utils::current_mem_usage();
     Print_Time();
     Print_Memory();
-    Check_Nunber_Of_Points_In_Triangulation(T);
+    Check_Nunber_Of_Points_In_Triangulation(T,numnodes3);
     T.clear();
 
     return 0;
@@ -333,7 +331,7 @@ Cell_handle getStartTet(int insertcount) {
             return arrayofnodetet[vp[insertcount - 1]]->cell();
     }
     int nnode;
-    if (insertcount < 1) 
+    if (insertcount < 1)
         return Cell_handle();
     else if (insertcount < firstlownode)
         nnode = vp[(insertcount - 1) / 2];
@@ -374,7 +372,7 @@ void makeInsOrder(void) {
 
     while (a /= 2)
         firstlownode *= 2;
-    
+
     currentlownode = firstlownode;
     parentoflownode = new int[numnodes3 - firstlownode];
     buildKdtreeAndSortNode(0, numnodes3 - 1, 0, 0);
@@ -402,7 +400,7 @@ int getDirectFromArray(int bend, int tend) {
     if (sortway == 2 && tend - bend > 10) nstop = bend + (int) sqrt(double(tend - bend));
     int ip = nodestcp[bend];
     double
-    box[2][3] = {coord_nodes3[ip][0], coord_nodes3[ip][1], coord_nodes3[ip][2],coord_nodes3[ip][0], coord_nodes3[ip][1], coord_nodes3[ip][2]};
+    box[2][3] = {coord_nodes3[ip][0], coord_nodes3[ip][1], coord_nodes3[ip][2], coord_nodes3[ip][0], coord_nodes3[ip][1], coord_nodes3[ip][2]};
     for (int i = bend; i <= nstop; i++) {
         ip = nodestcp[i];
         for (int j = 0; j < 3; j++) {
@@ -477,8 +475,7 @@ void splitNodeArray(int dir, int mposition, int bend, int tend) {
                 //if(n==tend+1)
                 //jf_error("errsplitnodearray",1);
                 nodestcp[n++] = nodesort[i][j];
-            }
-            else
+            } else
                 nodestcp[mposition] = nodesort[i][j];
             //	jf_error("errsplitnodearray",1);
         }
