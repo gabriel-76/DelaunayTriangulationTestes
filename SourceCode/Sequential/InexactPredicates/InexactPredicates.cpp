@@ -17,6 +17,7 @@
 // Build includes
 #include <vector>
 #include "./../../Utils/utils.cpp"
+#include "../../../instances/Generation/dinamicInstances.cpp"
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel IK;
 typedef CGAL::Triangulation_vertex_base_3 <IK> Vb;
@@ -34,7 +35,6 @@ std::vector<Vertex_handle> pointsReference;
 Delaunay delaunay_triangulation;
 
 unsigned int number_of_points;
-bool interval_instance = false;
 
 Memory memory_before, memory_after;
 clock_t clock_first, clock_second;
@@ -61,20 +61,6 @@ bool is_numeric(const char *str) {
     return res;
 }
 
-void Check_Entries(int num_args, char **args) {
-    if (num_args < 2) {
-        std::cout << "PASS THE INSTANCE BY PARAMETER" << std::endl
-                << "EXIT_FAILURE" << std::endl;
-        exit(1);
-    } else if (num_args == 3) {
-        if (is_numeric(args[2])) {
-            std::cout << "IDENTIFIED INSTANCE LIMIT" << std::endl;
-            number_of_points = atoi(args[2]);
-            interval_instance = true;
-        }
-    }
-}
-
 void Check_Nunber_Of_Points_In_Triangulation() {
 
     assert(delaunay_triangulation.is_valid());
@@ -84,8 +70,7 @@ void Check_Nunber_Of_Points_In_Triangulation() {
         std::cout << "success" << std::endl;
     } else {
         std::cout << "warning contais " << full
-                  << "expected" << number_of_points << std::endl;
-        
+                  << "expected" << number_of_points << std::endl;        
     }
 
 }
@@ -101,8 +86,8 @@ void Read_Instance(char *name) {
     }
     double coords[3];
 
-    if (!interval_instance)
-        file_points >> number_of_points;
+
+    file_points >> number_of_points;
 
     points.reserve(number_of_points);
     pointsReference.reserve(number_of_points);
@@ -120,6 +105,30 @@ void Read_Instance(char *name) {
     file_points.close();
 }
 
+void Read_Dinamic_Instance(){
+    Generator g;
+    for (int i = 0; i < 10; i++){
+        g = Create_Aleatorio();
+        std :: cout << g.x << " " << g.y << " " << g.z << " " << std::endl;
+    }
+}
+void Check_Entries(int num_args, char **args) {    
+    
+    if (num_args < 3) {
+        std::cout << "Read the manual" << std::endl;
+        exit(1);
+    } else {
+        switch(atoi(args[1])){
+            case 1: Read_Instance(args[2]);
+            break;
+            case 2: ;
+            break;            
+        }
+    }
+}
+
+
+
 /*
  * void Read_Pontos(char *name) {
 
@@ -132,8 +141,8 @@ void Read_Instance(char *name) {
     }
     double coords[3];
 
-    if (!interval_instance)
-        file_points >> number_of_points;
+
+    file_points >> number_of_points;
     pontos.reserve(number_of_points);
 
     int i = 0;
@@ -389,10 +398,9 @@ void head_csv(char *name_instance){
 }
 
 int main(int argc, char **argv) {
-
-    Check_Entries(argc, argv);
+    srand48(time(NULL));
     memory_before = Utils::current_mem_usage();
-    Read_Instance(argv[1]);
+    Check_Entries(argc, argv);
     head_csv(argv[1]);
 
     //~ Compute_Aleatory();
@@ -402,12 +410,11 @@ int main(int argc, char **argv) {
     //Compute_Reverse_Hilbert_Middle();
     //Compute_Spatial_Median();
     //Compute_Reverse_Spatial_Median();
-    Compute_Spatial_Middle();
+    //Compute_Spatial_Middle();
     //Compute_Reverse_Spatial_Middle();
     //~ Compute_Brio();    
     //~ Compute_Reverse_Brio();
     Compute_Default_Constructor();
     //Compute_Reverse_Cut_Longest_Edge_KDtree(argv[1]);
-
     return EXIT_SUCCESS;
 }
