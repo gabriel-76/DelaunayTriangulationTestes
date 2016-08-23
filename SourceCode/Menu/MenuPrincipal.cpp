@@ -119,8 +119,7 @@ void check_args(int argc, char **argv) {
             static_test_inexact(argv[2]);
         } else if (op == 2) {
             //Static test exact
-            //static_test_exact(argv[2]);
-            cout << "Testes estaticos ainda nao estao prontos" << endl;
+            static_test_exact(argv[2]);
         }
     } else if (argc == 4) {
         //exact
