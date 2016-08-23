@@ -449,20 +449,20 @@ int main(int argc, char **argv) {
     srand48(time(NULL));
     memory_before = Utils::current_mem_usage();
     Check_Entries(argc, argv);
-    head_csv(argv[1]);
+    head_csv(argv[2]);
 
     //~ Compute_Aleatory();
     //Compute_Hilbert_Median();
     //Compute_Reverse_Hilbert_Median();
     //Compute_Hilbert_Middle();
     //Compute_Reverse_Hilbert_Middle();
-    //Compute_Spatial_Median();
+    Compute_Spatial_Median();
     //Compute_Reverse_Spatial_Median();
-    //Compute_Spatial_Middle();
+    Compute_Spatial_Middle();
     //Compute_Reverse_Spatial_Middle();
     //~ Compute_Brio();    
     //~ Compute_Reverse_Brio();
-    Compute_Default_Constructor();
+    //Compute_Default_Constructor();
     //Compute_Reverse_Cut_Longest_Edge_KDtree(argv[1]);
     return EXIT_SUCCESS;
 }
